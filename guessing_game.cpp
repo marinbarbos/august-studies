@@ -1,6 +1,11 @@
 #include <iostream>
+#include <cstdlib>
+
+// TODO: add scoreboard to a locally stored text file
+// TODO: add pauses in prints for dramatic effect
 int main() {
-	const int correct_num = 69;
+	srand(time(NULL));
+	const int correct_num = rand() % 100;
 	int guessed_num = 0;
 	int lives = 50;
 	int tries = 0;
@@ -10,7 +15,7 @@ int main() {
 	std::cout << "+++++ Bem vindo ++++" << std::endl;
 	std::cout << "++++++++++++++++++++" << std::endl;
 	std::cout << std::endl;
-	std::cout << "Pick a dificcultyL (e)asy, (m)edium, (h)ard" << std::endl;
+	std::cout << "Pick a dificculty (e)asy, (m)edium, (h)ard" << std::endl;
 	std::cin >> hardness;
 	switch(hardness) {
 		case 'e' : {
@@ -37,9 +42,7 @@ int main() {
 	}
 	std::cout << "+ You have " << lives << " lives +" << std::endl;
 	std::cout << "+ Try to guess the number in as little tries as possible. +" << std::endl;
-
-	std::cout << "The secret number is "<< correct_num << ", shhhhh" << std::endl;
-
+	std::cout << "+ Cash prize is " << points << " max." << std::endl;
 	
 	while (lives > 0) {
 		std::cin >> guessed_num;
