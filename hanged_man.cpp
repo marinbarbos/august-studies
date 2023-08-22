@@ -2,9 +2,22 @@
 #include <string>
 
 using namespace std;
+
+int isCharInWord(string word, char guessedChar) {
+	int i = 0;
+	for (char letter : word) {
+		if(guessedChar == letter) {
+			return i;
+		}
+		i++;
+	}
+	return -1;
+}
+
 int main() {
-	char guessed_char;
+	char guessedChar;
 	string guessed_word;
+	char hardness;
 	int tries = 0;
 	int lives = 6;
 	/* 13     6
@@ -15,13 +28,12 @@ int main() {
 	 o o
 	 */
 	double points = 1000.0;
-	bool not_corect = true;
-	std::cout << "++++++++++++++++++++" << std::endl;
-	std::cout << "+++++ Bem vindo ++++" << std::endl;
-	std::cout << "++++++++++++++++++++" << std::endl;
-	std::cout << std::endl;
-	std::cout << "Pick a dificculty (e)asy, (m)edium, (h)ard" << std::endl;
-	std::cin >> hardness;
+	cout << "++++++++++++++++++++" << endl;
+	cout << "+++++ Bem vindo ++++" << endl;
+	cout << "++++++++++++++++++++" << endl;
+	cout << endl;
+	cout << "Pick a dificculty (e)asy, (m)edium, (h)ard" << endl;
+	cin >> hardness;
 	switch(hardness) {
 		case 'e' : {
 			lives = 13;
@@ -46,37 +58,40 @@ int main() {
 		}
 	}
 
-	string word = "PALAVRA";
-	int char_count = word.length();
+	const string word = "PALAVRA";
+	string currentWord = "";
+	int charCount = word.size();
 
+	for (int i = 0; i < charCount; ++i) {
+		currentWord = currentWord + "_";
+	}
+	int position = -1;
 
-	while (not_correct) {
-		for (int i = 0; i < char_count; ++i) {
-			cout << "_";
-		}
-		std::cout << "guess a character >.<" << std::endl;
-		std::cout << "meow meow meow placeholder" << std::endl;
-		cin >> guessed_char		
-		int position = charInWord(word);
-		if (charInWord(word)) {
+	while (true) {
+		cout << "WORD: " << currentWord << endl;
+		cout << "Guess a character: " << endl;
+		cin >> guessedChar;
+		position = isCharInWord(word, guessedChar);
+		if (position > -1) {
 			cout << "Nice!" << endl;
-
-		}
-
-		std::cout << "guess the word" << std::endl;
-		std::cout << "meow meow meow placeholder" << std::endl;
-		cin >> guessed_word
-		if (guessed_word != word) {
-			std::cout << "Wrong!!" << std::endl;
+			string str(1, guessedChar);
+			currentWord.replace(position, 1, str);
+			tries++;
+			//updateWord(currentWord, position, guessedChar);
+		} else {
+			cout << "Wrong!!" << endl;
 			tries++;
 			lives--;
-			points = point - (abs(char_count+tries)*2);
-			return 0;
-		
-		} else {
-			std::cout << "Correct!!" << std::endl;
-			std::cout << "meow meow you did it in " << tries << " tries!" << std::endl;
-			std::cout << "that gives you " << points << " monies!" << std::endl;
+			points = points - (abs(charCount+tries)*2);		
+		}
+
+		//std::cout << "guess the word" << std::endl;
+		//std::cout << "meow meow meow placeholder" << std::endl;
+		//cin >> guessed_word
+		if(currentWord == word) {
+			cout << "Correct!!" << word << endl;
+			cout << "meow meow you did it in " << tries << " tries!" << endl;
+			cout << "that gives you " << points << " monies!" << endl;
 			return 0;
 		}
 	}
