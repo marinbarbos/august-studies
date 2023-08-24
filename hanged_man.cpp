@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
+#include <cstdlib>
 
 using namespace std;
 // posso buscar na palavra preenchida para ver se ja tem uma letra na posicao encontrada
@@ -23,6 +25,7 @@ void showHangman(int tries, int lives) {
 }
 
 int main() {
+  srand(time(NULL));
   char guessedChar;
   string guessedWord;
   char hardness;
@@ -66,7 +69,21 @@ int main() {
     }
   }
 
-  const string word = "PALAVRA";
+  string line;
+  vector<string> availableWords;
+  ifstream rfile;
+  rfile.open("palavras.txt");
+  if (rfile.is_open()) {
+      while (getline(rfile, line)) {
+          cout << line << endl;
+          availableWords.push_back(line);
+      }
+      rfile.close();
+  }
+
+  const int wordIndex = rand() % 7;
+  string word = availableWords.at(wordIndex);
+  
   string currentWord = "";
   int charCount = word.size();
 
@@ -118,20 +135,18 @@ int main() {
           cout << "Wrong!!" << endl;
           tries++;
           lives = lives - 2;
-          points = points - (abs(charCount+tries)*4);           
+          points = points - (abs(charCount*tries)*2);           
         }
         break;
       }
     }
-    
 
     if(currentWord == word) {
-      cout << "Correct!!" << word << endl;
+      cout << "Correct!! The word is: " << word << endl;
       cout << "You guessed correctly in " << tries << " tries!" << endl;
       cout << "That gives you " << points << " points!" << endl;
       return 0;
     }
   }
-  cout << word << endl;
   return 0;
 }
