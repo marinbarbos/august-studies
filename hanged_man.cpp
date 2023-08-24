@@ -83,17 +83,18 @@ int main() {
 
   const int wordIndex = rand() % 7;
   string word = availableWords.at(wordIndex);
-  
+
   string currentWord = "";
   int charCount = word.size();
-
   for (int i = 0; i < charCount; ++i) {
     currentWord = currentWord + "_";
   }
+
   vector<int> position;
   vector<char> wrongGuesses;
+
   char menuOption;
-  while (true) {
+  while (lives > 0) {
     cout << "WORD: " << currentWord << endl;
     cout << "Wrong guesses: ";
     for (char g: wrongGuesses)
@@ -126,10 +127,8 @@ int main() {
       case 'w': {
         cout << "Guess the word:" << endl;
         cin >> guessedWord;
-        //cout << "Guess the word:" << endl;
         for (auto & c: guessedWord) c = (char)toupper(c);
         if(guessedWord == word) {
-            // String copy used
             currentWord.replace(0, charCount, guessedWord);
         } else {
           cout << "Wrong!!" << endl;
@@ -148,5 +147,8 @@ int main() {
       return 0;
     }
   }
+  cout << "You failed!! The word is: " << word << endl;
+  cout << "You couldnt guess correctly in " << tries << " tries!" << endl;
+  cout << "That gives you no points!" << endl;
   return 0;
 }
