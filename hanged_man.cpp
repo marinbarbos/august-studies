@@ -20,8 +20,133 @@ vector<int> isCharInWord(string word, char guessedChar, string currentWord) {
   return aux;
 }
 
-void showHangman(int tries, int lives) {
-  int livesLeft = lives-tries;
+void printLivesLeft(int lives, char hardness) {
+  int originalLives;
+  int livesDiff;
+    /* 13     6
+   SO2      o
+  / | \   / | \
+  o | o    / \
+   / \
+   o o
+   */
+  if(hardness == 'e' || hardness == 'E') {
+    originalLives = 13;
+    livesDiff = originalLives-lives;
+    switch(livesDiff) {
+      case 1: {
+        cout << " S" << endl;
+        break;
+      }
+      case 2: {
+        cout << " SO" << endl;
+        break;
+      }
+      case 3: {
+        cout << " SO2" << endl;
+        break;
+      }
+      case 4: {
+        cout << " SO2" << endl;
+        cout << "/" << endl;
+        break;
+      }
+      case 5: {
+        cout << " SO2" << endl;
+        cout << "/ |" << endl;
+        break;
+      }
+      case 6: {
+        cout << " SO2" << endl;
+        cout << "/ | \\" << endl;
+        break;
+      }
+      case 7: {
+        cout << " SO2" << endl;
+        cout << "/ | \\" << endl;
+        cout << "o" << endl;
+        break;
+      }
+      case 8: {
+        cout << " SO2" << endl;
+        cout << "/ | \\" << endl;
+        cout << "o |" << endl;
+        break;
+      }
+      case 9: {
+        cout << " SO2" << endl;
+        cout << "/ | \\" << endl;
+        cout << "o | o" << endl;
+        break;
+      }
+      case 10: {
+        cout << " SO2" << endl;
+        cout << "/ | \\" << endl;
+        cout << "o | o" << endl;
+        cout << " /" << endl;
+        break;
+      }
+      case 11: {
+        cout << " SO2" << endl;
+        cout << "/ | \\" << endl;
+        cout << "o | o" << endl;
+        cout << " / \\" << endl;
+        break;
+      }
+      case 12: {
+        cout << " SO2" << endl;
+        cout << "/ | \\" << endl;
+        cout << "o | o" << endl;
+        cout << " / \\" << endl;
+        cout << "o" << endl;
+        break;
+      }
+      case 13: {
+        cout << " SO2" << endl;
+        cout << "/ | \\" << endl;
+        cout << "o | o" << endl;
+        cout << " / \\" << endl;
+        cout << "o   o" << endl;
+        break;
+      }
+    }
+  } else {
+    originalLives = 6;
+    livesDiff = originalLives-lives;
+    switch(livesDiff) {
+      case 1: {
+        cout << " O " << endl;
+        break;
+      }
+      case 2: {
+        cout << " O " << endl;
+        cout << "/" << endl;
+        break;
+      }
+      case 3: {
+        cout << " O " << endl;
+        cout << "/|" << endl;
+        break;
+      }
+      case 4: {
+        cout << " O " << endl;
+        cout << "/|\\" << endl;
+        break;
+      }
+      case 5: {
+        cout << " O " << endl;
+        cout << "/|\\" << endl;
+        cout << "/" << endl;
+        break;
+      }
+      case 6: {
+        cout << " O " << endl;
+        cout << "/|\\" << endl;
+        cout << "/ \\" << endl;
+        break;
+      }
+    }
+  }  
 }
 
 int main() {
@@ -31,13 +156,7 @@ int main() {
   char hardness;
   int tries = 0;
   int lives = 6;
-  /* 13     6
-   SO2      o
-  / | \   / | \
-  o | o    / \
-   / \
-   o o
-   */
+
   double points = 1000.0;
   cout << "++++++++++++++++++++" << endl;
   cout << "+++++ Bem vindo ++++" << endl;
@@ -140,6 +259,7 @@ int main() {
       }
     }
 
+    printLivesLeft(lives, hardness);
     if(currentWord == word) {
       cout << "Correct!! The word is: " << word << endl;
       cout << "You guessed correctly in " << tries << " tries!" << endl;
